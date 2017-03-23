@@ -10,6 +10,7 @@
 
 ## Get Started
 - Make sure React Native is installed [React Native Docs](https://facebook.github.io/react-native/docs/getting-started.html)
+- Make sure Cocoapods is installed [Cocoapods](https://cocoapods.org/)
 - Clone repo
 - cd `solar`
 - `npm install` alternatively `yarn install`
@@ -17,6 +18,7 @@
 - Get a forecast.io API key and set `FORECAST_API=[key]` in `.env`
 - Get a Google Places for iOS API key and set `PLACES_API=[key]` in `.env`
 - Get a Google Servies for iOS API key and set `SERVICES_API=[key]` in `.env`
+- Navigate to ios folder, `cd ios` and run `pod install`
 - Run project using `react-native run-ios`
 
 ## About the project
