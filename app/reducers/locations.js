@@ -18,10 +18,12 @@ const initialState = {
   timezone: 'America/New_York',
   locationError: null,
   loading: false,
+  latestCollectiveUpdate: new Date(),
 };
 
 export default function locations(state = initialState, action = {}) {
   switch (action.type) {
+    case types.FETCH_LOCATIONS:
     case types.LOCATION_LOADING:
       return {
         ...state,
@@ -51,6 +53,14 @@ export default function locations(state = initialState, action = {}) {
         locationError: null,
         loading: false,
       };
+    case types.FETCH_LOCATIONS_SUCCESS:
+      return {
+        ...state,
+        locations: action.locations,
+        locationError: null,
+        latestCollectiveUpdate: new Date(),
+        loading: false,
+      };
     case types.DELETE_LOCATION: // eslint-disable-line
       const index = state.locations.map((e) => { return e.id; }).indexOf(action.id);
       return {
@@ -58,6 +68,7 @@ export default function locations(state = initialState, action = {}) {
         locations: [...state.locations.slice(0, index), ...state.locations.slice(index + 1)],
         locationError: null,
       };
+    case types.FETCH_LOCATIONS_FAILURE:
     case types.ADD_INDEX_LOCATION_ERROR:
     case types.ADD_LOCATION_ERROR:
     case types.SET_ACTIVE_LOCATION_ERROR:

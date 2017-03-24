@@ -61,8 +61,7 @@ class Dashboard extends PureComponent {
   openSearchModal() {
     RNGooglePlaces.openAutocompleteModal({
       type: 'cities',
-    })
-    .then((place) => {
+    }).then((place) => {
       this.props.dispatch(locationActions.addLocationToStore(
         place.name,
         place.latitude,
@@ -105,7 +104,11 @@ class Dashboard extends PureComponent {
 
   _handleAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      this.fetchForecast();
+      const latestUpdate = this.props.locations.latestCollectiveUpdate;
+      const now = moment();
+      if (now.diff(latestUpdate, 'minutes') > 5) {
+        this.props.dispatch(locationActions.updateAllStoredLocations());
+      }
       this.setState({
         timestamp: moment(),
         openRight: false,
@@ -125,7 +128,7 @@ class Dashboard extends PureComponent {
       // Check if selected location was updated within past 5 minutes
       // In that case avoid updating location details
       if (now.diff(lastUpdated, 'minutes') > 5) {
-        this.props.dispatch(locationActions.addLocationToStore(loc.name, loc.lat, loc.lng, loc.id, index));
+        this.props.dispatch(locationActions.addLocationToStore(loc.name, loc.lat, loc.lng, false, loc.id, index));
       }
     } else {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -144,7 +147,7 @@ class Dashboard extends PureComponent {
           const lat = lastPosition.coords.latitude;
           const lng = lastPosition.coords.longitude;
           // get forecast for location based on lat/lng and injecft into object
-          this.props.dispatch(locationActions.addIndexLocation(name, lat, lng));
+          this.props.dispatch(locationActions.addLocationToStore(name, lat, lng, true));
         }).catch(err => console.log(err));
       }, (error) => alert(JSON.stringify(error)),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }

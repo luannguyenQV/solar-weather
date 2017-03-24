@@ -4,13 +4,13 @@
     Solar
   </h1>
   <p>
-   A personal project exploring React Native, Realmjs & Redux (iOS only).
+   A personal project exploring React Native, Realm, Redux & Styled Components. (iOS only).
   </p>
 </div>
 
 ## Get Started
-- Make sure React Native is installed [React Native Docs](https://facebook.github.io/react-native/docs/getting-started.html)
-- Make sure Cocoapods is installed [Cocoapods](https://cocoapods.org/)
+- Make sure you have React Native installed [React Native Docs](https://facebook.github.io/react-native/docs/getting-started.html)
+- Make sure you have Cocoapods installed [Cocoapods](https://cocoapods.org/)
 - Clone repo
 - cd `solar`
 - `npm install` alternatively `yarn install`
@@ -29,6 +29,7 @@ The project is a side-project built and maintained at night. It started as an ex
 - [x] [Redux](https://github.com/reactjs/redux)
 - [x] [Google Places Autocomplete](https://developers.google.com/places/web-service/autocomplete)
 - [x] [Forecast.io](http://expressjs.com/)
+- [x] [Styled Components](https://github.com/styled-components/styled-components)
 - [x] [React Native](https://facebook.github.io/react-native/)
 - [x] [React Native Config](https://github.com/luggit/react-native-config)
 - [x] [React Native Drawer](https://github.com/root-two/react-native-drawer)
