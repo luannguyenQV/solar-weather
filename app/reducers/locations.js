@@ -1,4 +1,5 @@
 import * as types from '../actions/actionTypes';
+import moment from 'moment';
 
 const initialState = {
   locations: [{
@@ -18,7 +19,7 @@ const initialState = {
   timezone: 'America/New_York',
   locationError: null,
   loading: false,
-  latestCollectiveUpdate: new Date(),
+  latestCollectiveUpdate: moment().subtract(1, 'day'),
 };
 
 export default function locations(state = initialState, action = {}) {

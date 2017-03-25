@@ -95,7 +95,7 @@ export default class Menu extends PureComponent { // eslint-disable-line
           <TouchableHighlight
             onPress={(e) => { this.handleClick('http://www.maxrandall.com/')}}
           >
-            <Text style={{ color: '#FFF' }}>Icons: Max Randall</Text>
+            <Text style={{ color: '#FFF' }}> & Max Randall</Text>
           </TouchableHighlight>
           <Image style={styles.image} source={require('../../assets/forecastlogo.png')} />
         </View>
