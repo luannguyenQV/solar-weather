@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Solar logo" src="https://raw.githubusercontent.com/Thomas0c/solar-weather/master/ios/solar_logo_updated.png" />
+  <img alt="Solar logo" width="200" src="https://raw.githubusercontent.com/Thomas0c/solar-weather/master/screenshots/solar_app.png" />
   <h1>
     Solar
   </h1>

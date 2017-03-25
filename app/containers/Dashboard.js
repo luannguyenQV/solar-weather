@@ -161,7 +161,12 @@ class Dashboard extends PureComponent {
     AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
 
     this.props.dispatch(settingsActions.getSettings());
-    this.fetchForecast();
+    if (this.props.locations.locations.length > 0) {
+      this.fetchForecast();
+      this.props.dispatch(locationActions.updateAllStoredLocations());
+    } else {
+      this.fetchForecast();
+    }
     // Initiate interval to update timestamp every 20 seconds.
     setInterval(() => {
       this.setState({

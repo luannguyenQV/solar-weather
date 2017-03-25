@@ -131,7 +131,7 @@ export const updateAllStoredLocations = () => {
         const lng = forecast.data.longitude;
         allLocations.forEach((res) => {
           const name = res.name;
-          if (lat === res.lat) {
+          if (lat === res.lat && lng === res.lng) {
             const location = { name, lat, lng };
             const extendedLocation = forecastResponseExtended(location, forecast, res.id);
             writeLocationToStore(extendedLocation, res.id);
