@@ -65,16 +65,22 @@ class LocationSearch extends PureComponent { // eslint-disable-line
       >
         <View style={{ backgroundColor: 'black', height: '100%' }}>
           <ListView
-            keyboardShouldPersistTaps={true}
+            keyboardShouldPersistTaps="always"
+            scrollEnabled={false}
             enableEmptySections
             dataSource={this.state.predictions}
             renderRow={rowData => <Row {...rowData} handleTap={e => this.LookUpPlace(e)} />}
             renderHeader={() => <Header onChange={text => this.getLocations(text)} />}
             renderFooter={() =>
-              <Image style={{ alignSelf: 'center', marginTop: 30, opacity: 0.5 }} source={require('../../assets/powered_by_google_on_non_white@2x.png')} />
+              <View>
+                <Image style={{ alignSelf: 'center', marginTop: 30, opacity: 0.5 }} source={require('../../assets/powered_by_google_on_non_white@2x.png')} />
+                <CloseButton
+                  absolute={false}
+                  toggle={toggleView}
+                />
+              </View>
             }
           />
-          <CloseButton toggle={toggleView} />
         </View>
       </Modal>
     );

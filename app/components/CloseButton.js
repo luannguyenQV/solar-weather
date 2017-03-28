@@ -10,9 +10,10 @@ import {
 
 export default class CloseButton extends PureComponent { // eslint-disable-line
   render() {
-    const { toggle } = this.props;
+    const { toggle, absolute } = this.props;
+    const buttonStyle = absolute ? styles.button : styles.buttonRelative;
     return (
-      <TouchableHighlight style={styles.button} underlayColor="transparent" onPress={toggle}>
+      <TouchableHighlight style={buttonStyle} underlayColor="transparent" onPress={toggle}>
         <View style={{ borderRadius: 20, width: 40, height: 40, borderColor: '#FFF', borderWidth: 2 }}>
           <Text style={styles.text}>X</Text>
         </View>
@@ -27,10 +28,15 @@ const styles = StyleSheet.create({
     bottom: 30,
     alignSelf: 'center',
   },
+  buttonRelative: {
+    position: 'relative',
+    alignSelf: 'center',
+    marginTop: 30,
+  },
   text: {
     fontFamily: 'Avenir',
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 9,
     fontWeight: '700',
     textAlign: 'center',
     color: '#FFF',
