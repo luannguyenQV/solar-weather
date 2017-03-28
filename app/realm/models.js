@@ -102,7 +102,7 @@ Options.schema = {
 
 const realm = new Realm({
   schema: [Locations, Options, Daily, Data, Hourly, BaseData, Currently],
-  schemaVersion: 68,
+  schemaVersion: 69,
 });
 
 module.exports = {

@@ -1,6 +1,7 @@
 // Modules
 import React, { PureComponent } from 'react';
 import moment from 'moment';
+import tz from 'moment-timezone';
 
 import {
   StyleSheet,
@@ -16,19 +17,23 @@ import Temperature from './utils/Temperature';
 
 export default class WeekOverview extends PureComponent { // eslint-disable-line
   render() {
-    const { forecast, unit } = this.props;
+    const { forecast, unit, timezone } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.shadow} />
         {forecast.map((day, idx) => {
-          if (idx > 0 && idx < 6) {
+          const zone = timezone || 'America/New_York';
+          const dayDate = moment.unix(day.time).startOf('day').tz(zone);
+          const now = moment().tz(zone).startOf('day');
+          if (dayDate.isAfter(now.add(1, 'day')) && idx < 7) {
             const temperatureMax = unit === 'c' ? day.temperatureMax : Temperature.convertToFahrenheit(day.temperatureMax);
             const fixedHighTemp = parseFloat(temperatureMax).toFixed(0);
             const temperatureMin = unit === 'c' ? day.temperatureMin : Temperature.convertToFahrenheit(day.temperatureMin);
             const fixedLowTemp = parseFloat(temperatureMin).toFixed(0);
+            const time = dayDate.tz(zone);
             return (
               <View style={forecastDay.container} key={idx}>
-                <Text style={forecastDay.dayTitle}>{moment.unix(day.time).format('dddd')}</Text>
+                <Text style={forecastDay.dayTitle}>{time.format('dddd')}</Text>
                 <WeatherIconWrapper>
                   <Image style={forecastDay.image} source={Icons.identifyIcon(day.icon)} />
                 </WeatherIconWrapper>
@@ -49,6 +54,7 @@ export default class WeekOverview extends PureComponent { // eslint-disable-line
 WeekOverview.propTypes = {
   forecast: React.PropTypes.arrayOf(React.PropTypes.shape({})),
   unit: React.PropTypes.string,
+  timezone: React.PropTypes.string,
 };
 
 const forecastDay = StyleSheet.create({

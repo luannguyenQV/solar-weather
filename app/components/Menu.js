@@ -1,5 +1,6 @@
 // Modules
 import React, { PureComponent } from 'react';
+import CloseButton from './CloseButton';
 
 import {
   Dimensions,
@@ -99,11 +100,7 @@ export default class Menu extends PureComponent { // eslint-disable-line
           </TouchableHighlight>
           <Image style={styles.image} source={require('../../assets/forecastlogo.png')} />
         </View>
-        <TouchableHighlight style={styles.button} underlayColor="transparent" onPress={handleMenu}>
-          <View style={{ borderRadius: 20, width: 40, height: 40, borderColor: '#FFF', borderWidth: 2 }}>
-            <Text style={styles.text}>X</Text>
-          </View>
-        </TouchableHighlight>
+        <CloseButton toggle={handleMenu} />
       </Animated.View>
     );
   }
@@ -125,18 +122,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#FFF',
     fontWeight: 'bold',
-  },
-  button: {
-    position: 'absolute',
-    bottom: 30,
-  },
-  text: {
-    fontFamily: 'Avenir',
-    fontSize: 16,
-    marginTop: 8,
-    fontWeight: '700',
-    textAlign: 'center',
-    color: '#FFF',
   },
   image: {
     width: 120,

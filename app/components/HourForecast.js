@@ -55,10 +55,10 @@ export default class HourForecast extends PureComponent { // eslint-disable-line
         <View style={styles.container}>
           {forecast.map((hour, idx) => {
             if (idx > 0 && idx < 6) {
-              const zone = timezone || 'America/New_York';
+              const zone = timezone || 'America/New_York';
               const temperature = unit === 'c' ? hour.temperature : Temperature.convertToFahrenheit(hour.temperature);
               const adjustedTemp = parseFloat(temperature).toFixed(0);
-              const time = moment.unix(hour.time).tz(timezone);
+              const time = moment.unix(hour.time).tz(zone);
               const timeFormat = timeType === '24' ? 'HH:00' : 'ha';
               return (
                 <View style={styles.hour} key={hour.time}>

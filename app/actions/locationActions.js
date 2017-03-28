@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Config from 'react-native-config';
 import * as types from './actionTypes';
-import models from '../realm/Locations';
+import models from '../realm/models';
 
 // Utilities
 const forecastRequest = (lat, lng) => {
@@ -35,7 +35,7 @@ const forecastResponseExtended = (location, res, id) => {
     { daily: {
       summary: res.data.daily.summary,
       icon: res.data.daily.icon,
-      data: res.data.daily.data.filter((item, idx) => { return idx < 6; }) },
+      data: res.data.daily.data.filter((item, idx) => { return idx < 7; }) },
     },
   );
 };
@@ -229,6 +229,8 @@ export function addLocationToStore(name, lat, lng, primary = false, id, index) {
         dispatch(setLocationSettings(locs.length));
       } else if (locs.length < 5 && locationCheck) {
         dispatch(locationError('Location already added', types.ADD_LOCATION_ERROR));
+      } else {
+        dispatch(locationError('Maximum number of locations reached', types.ADD_LOCATION_ERROR));
       }
     }).catch((err) => {
       console.log(err);

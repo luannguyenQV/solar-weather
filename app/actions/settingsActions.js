@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import models from '../realm/Locations';
+import models from '../realm/models';
 
 const updateTimeReducer = (timeType, index) => {
   return {

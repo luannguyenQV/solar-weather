@@ -3,7 +3,6 @@ import Geocoder from 'react-native-geocoder';
 import { bindActionCreators } from 'redux';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import RNGooglePlaces from 'react-native-google-places';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -23,6 +22,7 @@ import HourForecast from '../components/HourForecast';
 import WeatherDetails from '../components/WeatherDetails';
 import Menu from '../components/Menu';
 import LocationOverview from '../components/LocationOverview';
+import LocationSearch from '../components/LocationSearch';
 
 import {
   AppRegistry,
@@ -45,6 +45,7 @@ class Dashboard extends PureComponent {
     isConnected: 'none',
     appState: 'unknown',
     menu: false,
+    locationSearch: false,
     openRight: false,
     openLeft: false,
     timestamp: moment(),
@@ -58,16 +59,12 @@ class Dashboard extends PureComponent {
     }
   }
 
-  openSearchModal() {
-    RNGooglePlaces.openAutocompleteModal({
-      type: 'cities',
-    }).then((place) => {
-      this.props.dispatch(locationActions.addLocationToStore(
-        place.name,
-        place.latitude,
-        place.longitude,
-      ));
-    }).catch(error => console.log(error.message));  // error is a Javascript Error object
+  toggleLocationSearch() {
+    this.setState({
+      locationSearch: !this.state.locationSearch,
+      openRight: false,
+      openLeft: false,
+    });
   }
 
   handleMenu() {
@@ -197,6 +194,7 @@ class Dashboard extends PureComponent {
       openRight,
       openLeft,
       openDetails,
+      locationSearch,
     } = this.state;
 
     const {
@@ -212,7 +210,7 @@ class Dashboard extends PureComponent {
     const rightOpen = locations.locationError ? false : null;
     return (
       <Drawer
-        disabled={!connected || menu}
+        disabled={!connected || menu || locationSearch}
         type="static"
         open={openRight}
         onOpenStart={() => { this.setState({ openRight: true })}}
@@ -229,7 +227,7 @@ class Dashboard extends PureComponent {
           <LocationOverview
             day={dayTime}
             activeLocation={settings.locationIndex}
-            openModal={this.openSearchModal.bind(this)}
+            openModal={this.toggleLocationSearch.bind(this)}
             locations={locations.locations}
             unit={settings.unit}
           />
@@ -245,6 +243,7 @@ class Dashboard extends PureComponent {
             <WeekOverview
               forecast={Array.from(activeLocation.daily.data || [])}
               unit={settings.unit}
+              timezone={activeLocation.timezone}
             />
           }
           negotiatePan={true}
@@ -255,6 +254,10 @@ class Dashboard extends PureComponent {
           tweenHandler={Drawer.tweenPresets.parallax}
         >
           <View style={styles.container}>
+            <LocationSearch
+              visible={locationSearch}
+              toggleView={this.toggleLocationSearch.bind(this)}
+            />
             <Menu
               menu={menu}
               unitIndex={settings.unitIndex}
