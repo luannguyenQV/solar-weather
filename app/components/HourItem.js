@@ -5,10 +5,8 @@ import tz from 'moment-timezone';
 
 import {
   StyleSheet,
-  Animated,
   Text,
   View,
-  Dimensions,
   Image,
 } from 'react-native';
 
@@ -19,14 +17,15 @@ import WeatherIconWrapper from './styled/WeatherIconWrapper';
 
 export default class HourItem extends PureComponent { // eslint-disable-line
   render() {
-    const { unit, timeType, timezone } = this.props;
+    const { unit, timeType, timezone, rowId } = this.props;
     const zone = timezone || 'America/New_York';
     const temperature = unit === 'c' ? this.props.temperature :
     Temperature.convertToFahrenheit(this.props.temperature);
     const adjustedTemp = parseFloat(temperature).toFixed(0);
     const time = moment.unix(this.props.time).tz(zone);
     const timeFormat = timeType === '24' ? 'HH:00' : 'ha';
-    if (this.props.rowId < 13) {
+    const now = moment().tz(zone);
+    if (time.isAfter(now)) {
       return (
         <View style={styles.hour} key={time}>
           <Text style={styles.hourText}>{time.minutes(0).format(timeFormat)}</Text>

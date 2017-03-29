@@ -44,6 +44,7 @@ export default class HourForecast extends PureComponent { // eslint-disable-line
   }
 
   render() {
+    const { timeType, unit, timezone } = this.props;
     return (
       <Animated.View
         style={{
@@ -65,7 +66,15 @@ export default class HourForecast extends PureComponent { // eslint-disable-line
           bounces={false}
           directionalLockEnabled
           dataSource={this.state.dataSource}
-          renderRow={(rowData, secId, rowId) => <HourItem {...rowData} rowId={rowId} />}
+          renderRow={(rowData, secId, rowId) =>
+            <HourItem
+              {...rowData}
+              unit={unit}
+              timeType={timeType}
+              timezone={timezone}
+              rowId={rowId}
+            />
+          }
         />
       </Animated.View>
     );
@@ -75,6 +84,9 @@ export default class HourForecast extends PureComponent { // eslint-disable-line
 HourForecast.propTypes = {
   forecast: React.PropTypes.arrayOf(React.PropTypes.shape({})),
   openHours: React.PropTypes.bool,
+  timeType: React.PropTypes.string,
+  unit: React.PropTypes.string,
+  timezone: React.PropTypes.string,
 };
 
 const styles = StyleSheet.create({

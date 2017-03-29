@@ -29,7 +29,7 @@ const forecastResponseExtended = (location, res, id) => {
     { hourly: {
       summary: res.data.hourly.summary,
       icon: res.data.hourly.icon,
-      data: res.data.hourly.data.filter((item, idx) => { return idx < 12; }) },
+      data: res.data.hourly.data.filter((item, idx) => { return idx < 15; }) },
     },
     { currently: res.data.currently },
     { daily: {
