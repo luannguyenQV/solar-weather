@@ -39,4 +39,5 @@ The project is a side-project built and maintained at night. It started as an ex
 ![Example 2](https://raw.githubusercontent.com/Thomas0c/solar-weather/master/screenshots/screenshot_2.jpg)
 ![Example 3](https://raw.githubusercontent.com/Thomas0c/solar-weather/master/screenshots/screenshot_3.jpg)
 ![Example 4](https://raw.githubusercontent.com/Thomas0c/solar-weather/master/screenshots/screenshot_4.jpg)
-![Example 5](https://raw.githubusercontent.com/Thomas0c/solar-weather/master/screenshots/screenshot_5.jpg)
+![Example 5](https://raw.githubusercontent.com/Thomas0c/solar-weather/master/screenshots/screenshot_5.png)
+![Example 6](https://raw.githubusercontent.com/Thomas0c/solar-weather/master/screenshots/screenshot_6.png)
