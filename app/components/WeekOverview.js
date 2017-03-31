@@ -23,9 +23,9 @@ export default class WeekOverview extends PureComponent { // eslint-disable-line
         <View style={styles.shadow} />
         {forecast.map((day, idx) => {
           const zone = timezone || 'America/New_York';
-          const dayDate = moment.unix(day.time).startOf('day').tz(zone);
+          const dayDate = moment.unix(day.time).tz(zone).startOf('day');
           const now = moment().tz(zone).startOf('day');
-          if (dayDate.isAfter(now.add(1, 'day')) && idx < 7) {
+          if (dayDate.isAfter(now) && idx < 6) {
             const temperatureMax = unit === 'c' ? day.temperatureMax : Temperature.convertToFahrenheit(day.temperatureMax);
             const fixedHighTemp = parseFloat(temperatureMax).toFixed(0);
             const temperatureMin = unit === 'c' ? day.temperatureMin : Temperature.convertToFahrenheit(day.temperatureMin);
