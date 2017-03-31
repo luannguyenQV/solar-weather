@@ -143,7 +143,7 @@ export const updateAllStoredLocations = () => {
         });
       });
     }).catch((err) => {
-      dispatch(fetchAllLocationsFailure(err));
+      dispatch(fetchAllLocationsFailure(err.response.data.statusText));
     });
   };
 };
@@ -234,7 +234,7 @@ export function addLocationToStore(name, lat, lng, primary = false, id, index) {
       }
     }).catch((err) => {
       console.log(err);
-      dispatch(locationError(err, types.ADD_LOCATION_ERROR));
+      dispatch(locationError(err.response.data.statusText, types.ADD_LOCATION_ERROR));
     });
   };
 }

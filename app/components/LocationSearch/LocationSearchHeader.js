@@ -8,15 +8,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#F0F0F0',
     borderBottomWidth: 2,
     height: 45,
     marginBottom: 10,
-    borderBottomColor: '#EFEFEF',
+    borderBottomColor: '#343434',
   },
   input: {
     height: 50,
-    color: '#EFEFEF',
+    color: '#343434',
     flex: 1,
     fontSize: 15,
   },
@@ -28,8 +28,8 @@ const Header = (props) => (
       style={styles.input}
       keyboardAppearance="dark"
       placeholder="Enter City Name"
-      placeholderTextColor="grey"
-      selectionColor="white"
+      placeholderTextColor="#999"
+      selectionColor="#343434"
       spellCheck={false}
       autoFocus
       autoCorrect={false}

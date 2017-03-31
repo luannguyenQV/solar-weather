@@ -22,7 +22,7 @@ import HourForecast from '../components/HourForecast';
 import WeatherDetails from '../components/WeatherDetails';
 import Menu from '../components/Menu';
 import LocationOverview from '../components/LocationOverview';
-import LocationSearch from '../components/LocationSearch';
+import LocationSearch from '../components/LocationSearch/LocationSearch';
 
 import {
   AppRegistry,
@@ -156,8 +156,10 @@ class Dashboard extends PureComponent {
     NetInfo.addEventListener('change', this.handleNetworkType.bind(this));
     AppState.addEventListener('change', this._handleAppStateChange);
     AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
-
+    const { isConnected } = this.state;
+    const connected = isConnected === 'wifi' || isConnected === 'cell';
     this.props.dispatch(settingsActions.getSettings());
+
     if (this.props.locations.locations.length > 0) {
       this.fetchForecast();
       this.props.dispatch(locationActions.updateAllStoredLocations());
@@ -166,9 +168,11 @@ class Dashboard extends PureComponent {
     }
     // Initiate interval to update timestamp every 20 seconds.
     setInterval(() => {
-      this.setState({
-        timestamp: moment(),
-      });
+      if (connected) {
+        this.setState({
+          timestamp: moment(),
+        });
+      }
     }, 20000);
   }
 
@@ -210,7 +214,7 @@ class Dashboard extends PureComponent {
     const rightOpen = locations.locationError ? false : null;
     return (
       <Drawer
-        disabled={!connected || menu || locationSearch}
+        disabled={menu || locationSearch}
         type="static"
         open={openRight}
         onOpenStart={() => { this.setState({ openRight: true })}}
@@ -234,7 +238,7 @@ class Dashboard extends PureComponent {
         }
       >
         <Drawer
-          disabled={!connected || menu}
+          disabled={menu || locationSearch}
           onOpenStart={() => { this.setState({ openLeft: true })}}
           onCloseStart={() => { this.setState({ openLeft: false })}}
           open={openLeft}

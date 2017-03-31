@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#EFEFEF',
+    color: '#343434',
+    fontFamily: 'Baskerville',
     marginLeft: 12,
     fontSize: 16,
   },

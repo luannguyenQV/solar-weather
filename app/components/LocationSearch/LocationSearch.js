@@ -2,18 +2,18 @@
 import React, { PureComponent } from 'react';
 import RNGooglePlaces from 'react-native-google-places';
 import { connect } from 'react-redux';
+import Modal from '../Modal';
 
 import {
   View,
-  Modal,
   ListView,
   Image,
 } from 'react-native';
 
-import * as locationActions from '../actions/locationActions';
+import * as locationActions from '../../actions/locationActions';
 import Row from './LocationSearchRow';
 import Header from './LocationSearchHeader';
-import CloseButton from './CloseButton';
+import CloseButton from '../CloseButton';
 
 class LocationSearch extends PureComponent { // eslint-disable-line
   constructor() {
@@ -57,35 +57,61 @@ class LocationSearch extends PureComponent { // eslint-disable-line
   }
 
   render() {
-    const { toggleView, visible } = this.props;
+    const { visible, toggleView } = this.props;
     return (
       <Modal
-        animationType="slide"
         visible={visible}
-      >
-        <View style={{ backgroundColor: 'black', height: '100%' }}>
-          <ListView
-            keyboardShouldPersistTaps="always"
-            scrollEnabled={false}
-            enableEmptySections
-            dataSource={this.state.predictions}
-            renderRow={rowData => <Row {...rowData} handleTap={e => this.LookUpPlace(e)} />}
-            renderHeader={() => <Header onChange={text => this.getLocations(text)} />}
-            renderFooter={() =>
-              <View>
-                <Image style={{ alignSelf: 'center', marginTop: 30, opacity: 0.5 }} source={require('../../assets/powered_by_google_on_non_white@2x.png')} />
-                <CloseButton
-                  absolute={false}
-                  toggle={toggleView}
-                />
-              </View>
-            }
+        toggleView={toggleView}
+        content={<ListView
+        keyboardShouldPersistTaps="always"
+        scrollEnabled={false}
+        enableEmptySections
+        dataSource={this.state.predictions}
+        renderRow={rowData => <Row {...rowData} handleTap={e => this.LookUpPlace(e)} />}
+        renderHeader={() => <Header onChange={text => this.getLocations(text)} />}
+        renderFooter={() =>
+          <Image
+            style={imageStyle}
+            source={require('../../../assets/powered_by_google_on_white@2x.png')}
           />
-        </View>
-      </Modal>
+        }
+      />}
+      />
     );
   }
 }
+
+const imageStyle = {
+  alignSelf: 'center',
+  marginTop: 30,
+  width: 120,
+  resizeMode: 'contain',
+};
+
+const viewWrapper = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+};
+
+const viewBoxStyle = {
+  position: 'relative',
+  marginTop: '15%',
+  backgroundColor: '#F0F0F0',
+  height: '65%',
+  width: '85%',
+  alignSelf: 'center',
+  shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 0
+    },
+  shadowRadius: 5,
+  shadowOpacity: 0.8
+};
 
 LocationSearch.propTypes = {
   toggleView: React.PropTypes.func,

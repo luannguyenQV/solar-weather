@@ -1,7 +1,5 @@
 // Modules
 import React, { PureComponent } from 'react';
-import CloseButton from './CloseButton';
-
 import {
   Dimensions,
   Animated,
@@ -14,15 +12,11 @@ import {
   SegmentedControlIOS,
 } from 'react-native';
 
-export default class Menu extends PureComponent { // eslint-disable-line
-  constructor() {
-    super();
-    this.state = {
-      slideInAnim: new Animated.Value(-Dimensions.get('window').height),
-    };
-  }
+import CloseButton from './CloseButton';
+import Modal from './Modal';
 
-   handleClick = (url) => {
+export default class Menu extends PureComponent { // eslint-disable-line
+  handleClick = (url) => {
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
@@ -30,23 +24,10 @@ export default class Menu extends PureComponent { // eslint-disable-line
     });
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.menu !== this.props.menu) {
-      this.triggerAnimation();
-    }
-  }
-
-  triggerAnimation() {
-    const topValue = this.props.menu ? -Dimensions.get('window').height : 0;
-    Animated.timing(
-      this.state.slideInAnim,
-      { toValue: topValue },
-    ).start();
-  }
-
   render() {
     const {
       handleMenu,
+      menu,
       unitIndex,
       timeIndex,
       updateIndex,
@@ -54,54 +35,46 @@ export default class Menu extends PureComponent { // eslint-disable-line
     } = this.props;
 
     return (
-      <Animated.View
-        style={{
-          position: 'relative',
-          alignItems: 'center',
-          zIndex: 2,
-          height: '100%',
-          width: '100%',
-          backgroundColor: 'rgba(0, 0, 0, 0.9)',
-          top: this.state.slideInAnim,
-          left: 0,
-        }}
-      >
-        <Text style={styles.title}>Settings</Text>
-        <SegmentedControlIOS
-          id="unit"
-          style={{ backgroundColor: 'transparent', width: '80%' }}
-          tintColor="#FFF"
-          values={['Metric', 'Imperial']}
-          selectedIndex={unitIndex}
-          onChange={updateIndex}
-        />
-        <SegmentedControlIOS
-          style={{ backgroundColor: 'transparent', width: '80%', marginTop: 20 }}
-          tintColor="#FFF"
-          values={['24 Hour', '12 Hour']}
-          selectedIndex={timeIndex}
-          onChange={updateTimeIndex}
-        />
-        <View style={styles.credits}>
-          <Text 
-            style={{ color: '#FFF', fontWeight: 'bold', marginBottom: 10 }}
-          >
-            Credits
-          </Text>
-          <TouchableHighlight
-            onPress={(e) => { this.handleClick('http://germanicons.com/')}}
-          >
-            <Text style={{ color: '#FFF' }}>Icons: Ralf Schmitzer</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={(e) => { this.handleClick('http://www.maxrandall.com/')}}
-          >
-            <Text style={{ color: '#FFF' }}> & Max Randall</Text>
-          </TouchableHighlight>
-          <Image style={styles.image} source={require('../../assets/forecastlogo.png')} />
-        </View>
-        <CloseButton toggle={handleMenu} />
-      </Animated.View>
+      <Modal
+        visible={menu}
+        toggleView={handleMenu}
+        content={
+          <View style={{ position: 'relative', alignItems: 'center' }}>
+            <Text style={styles.title}>Settings</Text>
+            <SegmentedControlIOS
+              id="unit"
+              style={{ backgroundColor: 'transparent', width: '80%' }}
+              tintColor="#343434"
+              values={['Metric', 'Imperial']}
+              selectedIndex={unitIndex}
+              onChange={updateIndex}
+            />
+            <SegmentedControlIOS
+              style={{ backgroundColor: 'transparent', width: '80%', marginTop: 20 }}
+              tintColor="#343434"
+              values={['24 Hour', '12 Hour']}
+              selectedIndex={timeIndex}
+              onChange={updateTimeIndex}
+            />
+            <Text style={{ color: '#343434', fontWeight: 'bold', marginTop: 140 }}>
+              Credits
+            </Text>
+            <TouchableHighlight onPress={(e) => { this.handleClick('http://germanicons.com/')}}>
+            <Text style={{ color: '#343434' }}>Icons: Ralf Schmitzer</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={(e) => { this.handleClick('http://www.maxrandall.com/')}}
+            >
+              <Text style={{ color: '#343434' }}> & Max Randall</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={(e) => { this.handleClick('https://darksky.net/poweredby/')}}
+            >
+              <Image style={styles.image} source={require('../../assets/poweredby.png')} />
+            </TouchableHighlight>
+          </View> 
+        }
+      />
     );
   }
 }
@@ -120,7 +93,7 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue',
     marginTop: 20,
     marginBottom: 20,
-    color: '#FFF',
+    color: '#343434',
     fontWeight: 'bold',
   },
   image: {
@@ -130,8 +103,7 @@ const styles = StyleSheet.create({
   },
   credits: {
     alignItems: 'center',
-    position: 'absolute',
-    bottom: 80,
+    bottom: 40,
     width: '100%',
   },
 });

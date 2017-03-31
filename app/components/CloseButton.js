@@ -14,7 +14,7 @@ export default class CloseButton extends PureComponent { // eslint-disable-line
     const buttonStyle = absolute ? styles.button : styles.buttonRelative;
     return (
       <TouchableHighlight style={buttonStyle} underlayColor="transparent" onPress={toggle}>
-        <View style={{ borderRadius: 20, width: 40, height: 40, borderColor: '#FFF', borderWidth: 2 }}>
+        <View style={{ borderRadius: 20, overflow: 'hidden', width: 40, height: 40, backgroundColor: '#E17C7C', borderWidth: 0, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={styles.text}>X</Text>
         </View>
       </TouchableHighlight>
@@ -25,7 +25,7 @@ export default class CloseButton extends PureComponent { // eslint-disable-line
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    bottom: 30,
+    bottom: -20,
     alignSelf: 'center',
   },
   buttonRelative: {
@@ -36,9 +36,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Avenir',
     fontSize: 16,
-    marginTop: 9,
     fontWeight: '700',
-    textAlign: 'center',
     color: '#FFF',
   },
   image: {
