@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     color: '#343434',
     fontFamily: 'Baskerville',
     marginLeft: 12,
-    fontSize: 16,
+    fontSize: 20,
   },
 });
 

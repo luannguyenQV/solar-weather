@@ -56,7 +56,7 @@ export default class Menu extends PureComponent { // eslint-disable-line
               selectedIndex={timeIndex}
               onChange={updateTimeIndex}
             />
-            <Text style={{ color: '#343434', fontWeight: 'bold', marginTop: 140 }}>
+            <Text style={{ color: '#343434', fontWeight: 'bold', marginTop: 90 }}>
               Credits
             </Text>
             <TouchableHighlight onPress={(e) => { this.handleClick('http://germanicons.com/')}}>
