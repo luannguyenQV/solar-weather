@@ -33,6 +33,18 @@ BaseData.schema = {
   },
 };
 
+class Alert extends Realm.Object {}
+Alert.schema = {
+  name: 'Alert',
+  properties: {
+    title: 'string',
+    time: 'int',
+    expires: 'int',
+    description: 'string',
+    uri: 'string',
+  },
+};
+
 class Daily extends Realm.Object {}
 Daily.schema = {
   name: 'Daily',
@@ -79,6 +91,7 @@ Locations.schema = {
     name: 'string',
     hourly: 'Hourly',
     currently: 'Currently',
+    alerts: { type: 'list', objectType: 'Alert' },
     lat: 'float',
     lng: 'float',
     last_updated: 'date',
@@ -101,8 +114,8 @@ Options.schema = {
 };
 
 const realm = new Realm({
-  schema: [Locations, Options, Daily, Data, Hourly, BaseData, Currently],
-  schemaVersion: 69,
+  schema: [Locations, Options, Daily, Data, Alert, Hourly, BaseData, Currently],
+  schemaVersion: 71,
 });
 
 module.exports = {
