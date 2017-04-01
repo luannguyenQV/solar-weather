@@ -212,6 +212,7 @@ class Dashboard extends PureComponent {
     const activeLocation = locations.locations.length -1 < settings.locationIndex ?
     locations.locations[0] : locations.locations[settings.locationIndex];
     const rightOpen = locations.locationError ? false : null;
+
     return (
       <Drawer
         disabled={menu || locationSearch}

@@ -15,6 +15,7 @@ const initialState = {
     hourly: {
       data: [],
     },
+    alerts: [],
   }],
   timezone: 'America/New_York',
   locationError: null,

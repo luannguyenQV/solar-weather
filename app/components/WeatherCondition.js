@@ -36,6 +36,7 @@ export default class WeatherCondition extends PureComponent { // eslint-disable-
     const fixedTemp = parseFloat(temperature).toFixed(0);
     const fixedFeelsLike = parseFloat(apparentTemperature).toFixed(0);
     const precipitation = precipProbable ? `Chance of ${precipType}: ${precipProbable * 100}%` : '';
+
     return (
       <TouchableHighlight style={styles.container} onPress={toggleDetails} underlayColor="transparent">
         <View style={styles.container}>
