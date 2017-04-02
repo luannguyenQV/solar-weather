@@ -39,6 +39,7 @@ Alert.schema = {
   properties: {
     title: 'string',
     time: 'int',
+    severity: 'string',
     expires: 'int',
     description: 'string',
     uri: 'string',
@@ -115,7 +116,7 @@ Options.schema = {
 
 const realm = new Realm({
   schema: [Locations, Options, Daily, Data, Alert, Hourly, BaseData, Currently],
-  schemaVersion: 71,
+  schemaVersion: 72,
 });
 
 module.exports = {

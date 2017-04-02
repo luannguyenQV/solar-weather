@@ -1,5 +1,5 @@
 // Modules
-import React, { PureComponent } from 'react';
+import React, { PropTypes, PureComponent } from 'react';
 import RNGooglePlaces from 'react-native-google-places';
 import { connect } from 'react-redux';
 import Modal from '../Modal';
@@ -114,9 +114,9 @@ const viewBoxStyle = {
 };
 
 LocationSearch.propTypes = {
-  toggleView: React.PropTypes.func,
-  visible: React.PropTypes.bool,
-  dispatch: React.PropTypes.func,
+  toggleView: PropTypes.func,
+  visible: PropTypes.bool,
+  dispatch: PropTypes.func,
 };
 
 const mapStateToProps = ({ locations }) => ({ locations });

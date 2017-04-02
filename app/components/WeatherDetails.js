@@ -49,11 +49,11 @@ export default class WeatherDetails extends PureComponent { // eslint-disable-li
       }}
       >
         <DateText>
-          <Image style={styles.image} source={require('../../assets/sunrise.png')} />
+          <Image style={styles.image} source={require('../../assets/weather_icons/sunrise.png')} />
           {sunriseTime}
         </DateText>
         <DateText>
-          <Image style={styles.image} source={require('../../assets/sunset.png')} />
+          <Image style={styles.image} source={require('../../assets/weather_icons/sunset.png')} />
           {sunsetTime}
         </DateText>
       </Animated.View>

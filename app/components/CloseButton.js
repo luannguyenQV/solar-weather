@@ -1,5 +1,5 @@
 // Modules
-import React, { PureComponent } from 'react';
+import React, { PropTypes, PureComponent } from 'react';
 
 import {
   StyleSheet,
@@ -47,5 +47,5 @@ const styles = StyleSheet.create({
 });
 
 CloseButton.propTypes = {
-  toggle: React.PropTypes.func,
+  toggle: PropTypes.func,
 };

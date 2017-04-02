@@ -1,5 +1,5 @@
 // Modules
-import React, { PureComponent } from 'react';
+import React, { PropTypes, PureComponent } from 'react';
 
 import {
   Dimensions,
@@ -27,8 +27,8 @@ export default class Background extends PureComponent { // eslint-disable-line
 }
 
 Background.propTypes = {
-  condition: React.PropTypes.shape({}),
-  day: React.PropTypes.bool,
+  condition: PropTypes.shape({}),
+  day: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({

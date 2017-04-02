@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PropTypes, PureComponent } from 'react';
 import Colors from './utils/Colors';
 
 import {
@@ -6,6 +6,7 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Image,
 } from 'react-native';
 
 // Components
@@ -20,7 +21,7 @@ ${precip}`;
 
 export default class WeatherCondition extends PureComponent { // eslint-disable-line
   render() {
-    const { condition, day, toggleDetails, unit } = this.props;
+    const { condition, day, toggleDetails, unit, alerts, toggleAlert } = this.props;
     const precipProbable = condition.precipProbability > 0.3;
     const precipType = condition.precipType;
 
@@ -36,13 +37,18 @@ export default class WeatherCondition extends PureComponent { // eslint-disable-
     const fixedTemp = parseFloat(temperature).toFixed(0);
     const fixedFeelsLike = parseFloat(apparentTemperature).toFixed(0);
     const precipitation = precipProbable ? `Chance of ${precipType}: ${precipProbable * 100}%` : '';
-
+    const showAlert = alerts.length > 0;
     return (
       <TouchableHighlight style={styles.container} onPress={toggleDetails} underlayColor="transparent">
         <View style={styles.container}>
           <Text style={[styles.temp, { color: fontColor }]}>{fixedTemp}°</Text>
           <Text style={[styles.condition, { color: fontColor }]}>
             {condition.summary}
+            { showAlert &&
+              <TouchableHighlight style={{ width: 25, height: 25 }} onPress={toggleAlert} underlayColor="transparent">
+                <Image style={styles.image} source={require('../../assets/alert_icon.png')} />
+              </TouchableHighlight>
+            }
           </Text>
           <DateText style={{ color: fontColor }} day={day}>
             {formatText(fixedFeelsLike, condition.humidity, precipitation)}
@@ -54,10 +60,12 @@ export default class WeatherCondition extends PureComponent { // eslint-disable-
 }
 
 WeatherCondition.propTypes = {
-  condition: React.PropTypes.shape({}),
-  unit: React.PropTypes.string,
-  day: React.PropTypes.bool,
-  toggleDetails: React.PropTypes.func,
+  condition: PropTypes.shape({}),
+  unit: PropTypes.string,
+  day: PropTypes.bool,
+  toggleAlert: PropTypes.func,
+  toggleDetails: PropTypes.func,
+  alerts: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 const styles = StyleSheet.create({
@@ -66,6 +74,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: '5%',
     backgroundColor: 'transparent',
+  },
+  image: {
+    width: 20,
+    height: 20,
+    marginTop: 5,
+    marginLeft: 10,
+    resizeMode: 'contain',
   },
   temp: {
     fontSize: 50,

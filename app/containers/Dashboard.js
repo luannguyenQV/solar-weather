@@ -23,6 +23,8 @@ import WeatherDetails from '../components/WeatherDetails';
 import Menu from '../components/Menu';
 import LocationOverview from '../components/LocationOverview';
 import LocationSearch from '../components/LocationSearch/LocationSearch';
+import Modal from '../components/Modal';
+import AlertContent from '../components/AlertContent';
 
 import {
   AppRegistry,
@@ -51,6 +53,7 @@ class Dashboard extends PureComponent {
     timestamp: moment(),
     openHours: false,
     openDetails: false,
+    openAlert: false,
   };
 
   componentWillReceiveProps = (nextProps) => {
@@ -188,6 +191,12 @@ class Dashboard extends PureComponent {
     });
   }
 
+  toggleAlert() {
+    this.setState({
+      openAlert: !this.state.openAlert,
+    });
+  }
+
   render() {
     const {
       lastPosition,
@@ -199,6 +208,7 @@ class Dashboard extends PureComponent {
       openLeft,
       openDetails,
       locationSearch,
+      openAlert,
     } = this.state;
 
     const {
@@ -212,6 +222,11 @@ class Dashboard extends PureComponent {
     const activeLocation = locations.locations.length -1 < settings.locationIndex ?
     locations.locations[0] : locations.locations[settings.locationIndex];
     const rightOpen = locations.locationError ? false : null;
+
+    // Alert title and description
+    const showAlert = activeLocation.alerts.length > 0;
+    const activeAlertTitle = activeLocation.alerts.length > 0 ? activeLocation.alerts[0].title : '';
+    const activeAlertDescription = activeLocation.alerts.length > 0 ? activeLocation.alerts[0].description : '';
 
     return (
       <Drawer
@@ -259,6 +274,11 @@ class Dashboard extends PureComponent {
           tweenHandler={Drawer.tweenPresets.parallax}
         >
           <View style={styles.container}>
+            <Modal
+              visible={openAlert && showAlert}
+              toggleView={this.toggleAlert.bind(this)}
+              content={<AlertContent title={activeAlertTitle} description={activeAlertDescription} />}
+            />
             <LocationSearch
               visible={locationSearch}
               toggleView={this.toggleLocationSearch.bind(this)}
@@ -296,6 +316,8 @@ class Dashboard extends PureComponent {
               day={dayTime}
               condition={activeLocation.currently}
               toggleDetails={this.toggleDetails.bind(this)}
+              toggleAlert={this.toggleAlert.bind(this)}
+              alerts={Array.from(activeLocation.alerts)}
             />
             <WeatherDetails
               timezone={activeLocation.timezone}
