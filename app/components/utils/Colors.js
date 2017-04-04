@@ -13,7 +13,7 @@ const colors = {
   lightBeige: '#CEBA9F',
   darkBeige: '#A88F70',
   mattePurple: '#585D6D',
-  darkPurple: '#202335',
+  darkPurple: '#3E467E',
   lightSquash: '#7C718C',
   darkSquash: '#443E4E',
   darkGrey: '#757575',
