@@ -4,16 +4,16 @@ const colors = {
   lightGrey: '#EEEEEE',
   lightOrange: '#F2C992',
   darkOrange: '#FEC272',
-  lightBlueGrey: '#99C2E8',
-  darkBlueGrey: '#95A5B5',
-  lightMatteBlue: '#A5BBCF',
-  darkMatteBlue: '#5A6876',
-  lightBlue: '#5D74A0',
-  darkBlue: '#3C5078',
+  lightBlueGrey: '#A5C9D6',
+  darkBlueGrey: '#8093B6',
+  lightMatteBlue: '#A6B6BC',
+  darkMatteBlue: '#6D7B8D',
+  lightBlue: '#94B4BD',
+  darkBlue: '#5B828D',
   lightBeige: '#CEBA9F',
   darkBeige: '#A88F70',
-  lightAqua: '#94B4BD',
-  darkAqua: '#5A828D',
+  mattePurple: '#585D6D',
+  darkPurple: '#202335',
   lightSquash: '#7C718C',
   darkSquash: '#443E4E',
   darkGrey: '#757575',
@@ -37,7 +37,7 @@ const identifyBackground = (condition, day) => {
   } else if (condition === 'cloudy' || condition === 'partly-cloudy-day' || condition === 'partly-cloudy-night') {
     return day ? colors.lightMatteBlue : colors.darkMatteBlue;
   } else if (condition === 'rain') {
-    return day ? colors.lightAqua : colors.darkAqua;
+    return day ? colors.mattePurple : colors.darkPurple;
   } else if (condition === 'snow') {
     return day ? colors.white : colors.snowGrey;
   } else if (condition === 'thunderstorm') {
