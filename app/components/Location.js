@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { SwipeRow } from 'react-native-swipe-list-view';
+import { darken } from 'polished';
 
 import {
   StyleSheet,
@@ -19,7 +20,7 @@ class Location extends PureComponent { // eslint-disable-line
   render() {
     const { name, lat, lng, icon, day, action, id, index, activeLocation } = this.props;
     const selected = index === activeLocation;
-    const background = selected ? Colors.identifyBackground(icon, day) : '#EFEFEF';
+    const background = selected ? darken(0.1, Colors.identifyBackground(icon, day)) : '#EFEFEF';
     const iconName = selected ? `${icon}_white` : icon;
     return (
       <SwipeRow
