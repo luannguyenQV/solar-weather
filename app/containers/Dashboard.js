@@ -5,6 +5,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import axios from 'axios';
+import tz from 'moment-timezone';
 
 // Redux Actions
 import * as settingsActions from '../actions/settingsActions';
@@ -217,11 +218,12 @@ class Dashboard extends PureComponent {
     } = this.props;
 
     const connected = isConnected === 'wifi' || isConnected === 'cell';
-    const eveningTime = moment().hour(18).minute(0).second(0);
-    const dayTime = moment().isBefore(eveningTime);
     const activeLocation = locations.locations.length -1 < settings.locationIndex ?
     locations.locations[0] : locations.locations[settings.locationIndex];
     const rightOpen = locations.locationError ? false : null;
+    const timezone = activeLocation.timezone || 'America/New_York';
+    const eveningTime = moment().tz(timezone).hour(18).minute(0).second(0);
+    const dayTime = moment().tz(timezone).isBefore(eveningTime);
 
     // Alert title and description
     const showAlert = activeLocation.alerts.length > 0;
@@ -263,7 +265,7 @@ class Dashboard extends PureComponent {
             <WeekOverview
               forecast={Array.from(activeLocation.daily.data || [])}
               unit={settings.unit}
-              timezone={activeLocation.timezone}
+              timezone={timezone}
             />
           }
           negotiatePan={true}
@@ -307,7 +309,7 @@ class Dashboard extends PureComponent {
             <DateDisplay
               time={settings.timeType}
               timestamp={timestamp}
-              timezone={activeLocation.timezone}
+              timezone={timezone}
               day={dayTime}
               condition={activeLocation.currently.icon}
             />
@@ -320,7 +322,7 @@ class Dashboard extends PureComponent {
               alerts={Array.from(activeLocation.alerts)}
             />
             <WeatherDetails
-              timezone={activeLocation.timezone}
+              timezone={timezone}
               openDetails={openDetails}
               condition={Array.from(activeLocation.daily.data || [])}
             />
@@ -329,7 +331,7 @@ class Dashboard extends PureComponent {
               forecast={Array.from(activeLocation.hourly.data)}
               openHours={openHours}
               unit={settings.unit}
-              timezone={activeLocation.timezone}
+              timezone={timezone}
             />
             <LocationDisplay
               loading={locations.loading}
