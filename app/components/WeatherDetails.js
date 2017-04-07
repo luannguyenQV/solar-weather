@@ -34,19 +34,22 @@ export default class WeatherDetails extends PureComponent { // eslint-disable-li
   }
 
   render() {
-    const { condition, timezone } = this.props;
-    const sunriseBase = condition.length > 0 ? moment.unix(condition[0].sunriseTime).tz(timezone) : moment().tz(timezone);
-    const sunriseTime = condition.length > 0 ? sunriseBase.format('HH:MM') : moment().format('HH:MM');
-    const sunsetBase = condition.length > 0 ? moment.unix(condition[0].sunsetTime).tz(timezone) : moment().tz(timezone);
-    const sunsetTime = condition.length > 0 ? sunsetBase.format('HH:MM') : moment().format('HH:MM');
+    const { condition, timezone, currently } = this.props;
+    const current = condition.length > 0 ? condition[0] : { sunriseTime: moment(), sunsetTime: moment() };
+    const currentPrecipitationAboveLimit = currently.precipProbability > 0;
+    const sunriseBase = moment.unix(current.sunriseTime).tz(timezone);
+    const sunriseTime = sunriseBase.format('HH:MM');
+    const sunsetBase = moment.unix(current.sunsetTime).tz(timezone);
+    const sunsetTime = sunsetBase.format('HH:MM');
     return (
-      <Animated.View style={{
-        opacity: this.state.fadeAnim,
-        position: 'absolute',
-        left: 20,
-        top: '35%',
-        backgroundColor: 'transparent',
-      }}
+      <Animated.View
+        style={{
+          opacity: this.state.fadeAnim,
+          position: 'absolute',
+          left: 20,
+          top: currentPrecipitationAboveLimit ? '33%' : '31%',
+          backgroundColor: 'transparent',
+        }}
       >
         <DateText>
           <Image style={styles.image} source={require('../../assets/weather_icons/sunrise.png')} />
@@ -63,6 +66,7 @@ export default class WeatherDetails extends PureComponent { // eslint-disable-li
 
 WeatherDetails.propTypes = {
   condition: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+  currently: React.PropTypes.shape({}),
   openDetails: React.PropTypes.bool,
   timezone: React.PropTypes.string,
 };

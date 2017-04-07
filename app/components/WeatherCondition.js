@@ -1,6 +1,4 @@
 import React, { PropTypes, PureComponent } from 'react';
-import Colors from './utils/Colors';
-
 import {
   StyleSheet,
   Text,
@@ -8,6 +6,7 @@ import {
   View,
   Image,
 } from 'react-native';
+import Colors from './utils/Colors';
 
 // Components
 import DateText from './styled/DateText';
@@ -22,8 +21,8 @@ ${precip}`;
 export default class WeatherCondition extends PureComponent { // eslint-disable-line
   render() {
     const { condition, day, toggleDetails, unit, alerts, toggleAlert } = this.props;
-    const precipProbable = condition.precipProbability > 0.3;
-    const precipType = condition.precipType;
+    const precipProbable = condition.precipProbability > 0;
+    const precipType = condition.precipType || 'rain';
 
     // Get temperature and convert if needed
     const temperature = unit === 'c' ? condition.temperature :
@@ -36,7 +35,8 @@ export default class WeatherCondition extends PureComponent { // eslint-disable-
 
     const fixedTemp = parseFloat(temperature).toFixed(0);
     const fixedFeelsLike = parseFloat(apparentTemperature).toFixed(0);
-    const precipitation = precipProbable ? `Chance of ${precipType}: ${precipProbable * 100}%` : '';
+    const precipNumber = precipProbable ? parseFloat(condition.precipProbability * 100).toFixed(2) : 0;
+    const precipitation = precipProbable ? `Chance of ${precipType}: ${precipNumber}%` : '';
     const showAlert = alerts.length > 0;
     return (
       <TouchableHighlight style={styles.container} onPress={toggleDetails} underlayColor="transparent">
@@ -50,7 +50,7 @@ export default class WeatherCondition extends PureComponent { // eslint-disable-
               </TouchableHighlight>
             }
           </Text>
-          <DateText style={{ color: fontColor }} day={day}>
+          <DateText space style={{ color: fontColor }} day={day}>
             {formatText(fixedFeelsLike, condition.humidity, precipitation)}
           </DateText>
         </View>

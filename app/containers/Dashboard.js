@@ -324,6 +324,7 @@ class Dashboard extends PureComponent {
             <WeatherDetails
               timezone={timezone}
               openDetails={openDetails}
+              currently={activeLocation.currently}
               condition={Array.from(activeLocation.daily.data || [])}
             />
             <HourForecast
